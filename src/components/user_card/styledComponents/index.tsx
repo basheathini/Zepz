@@ -1,9 +1,9 @@
 import {styled} from 'styled-components/native';
 
-const StyledContainer = styled.View`
+const StyledContainer = styled.TouchableOpacity<StyledCellProps>`
   margin: 10px 10px 0px 10px;
   border-radius: 10px;
-  background-color: white;
+  background-color: ${({disable}) => (disable ? 'grey' : 'white')};
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -58,6 +58,10 @@ const StyledExpandedContainer = styled.View`
   width: 100%;
   margin-top: 10px;
 `;
+
+type StyledCellProps = {
+  disable: boolean;
+};
 
 export {
   StyledContainer,

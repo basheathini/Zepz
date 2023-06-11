@@ -3,8 +3,8 @@ import {User} from '../types';
 import DownArrow from '../assets/icons/DownArrow';
 import UpArrow from '../assets/icons/UpArrow';
 import {StyledButton, StyledText} from './global_styledComponents';
-import {useDispatch} from 'react-redux';
-import {followUser, blockUser} from '../redux/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {followUser, blockUser, unfollowUser} from '../redux/actions';
 import {
   StyledContainer,
   StyledExpandedContainer,
@@ -24,15 +24,22 @@ export interface UserSectionProps {
 const UserSection: FC<UserSectionProps> = ({user}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const dispatch = useDispatch();
-  //updated list of followed users and blocked users
-  //const connections = useSelector((state: any) => state.following);
+  const connections = useSelector((state: any) => state.following);
+  const isFollowing = connections.following.includes(user.account_id);
+  const isBlocked = connections.blocked.includes(user.account_id);
+  const showFollowing = isFollowing ? 'Unfollow' : 'Follow';
 
   const follow = () => {
-    dispatch(followUser(user));
+    if (!isFollowing) {
+      dispatch(followUser(user.account_id));
+    } else {
+      dispatch(unfollowUser(user.account_id));
+    }
   };
 
   const block = () => {
-    dispatch(blockUser(user));
+    dispatch(blockUser(user.account_id));
+    setIsCollapsed(false);
   };
 
   const isExpanded = () => {
@@ -40,7 +47,7 @@ const UserSection: FC<UserSectionProps> = ({user}) => {
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer disable={isBlocked}>
       <StyledViewContainer>
         <StyledUserInfoContainer>
           <StyledUserImage
@@ -51,9 +58,16 @@ const UserSection: FC<UserSectionProps> = ({user}) => {
 
           <StyledViewDetails>
             <StyledText fontSize="18px">{user.display_name}</StyledText>
-            <StyledText fontSize="10px" fontWeight="400">
-              {user.location}
-            </StyledText>
+            {isFollowing && (
+              <StyledText fontSize="10px" fontColor="green" fontWeight="400">
+                Following
+              </StyledText>
+            )}
+            {isBlocked && (
+              <StyledText fontSize="10px" fontColor="red" fontWeight="400">
+                Blocked
+              </StyledText>
+            )}
             <StyledReputationView>
               <StyledText fontSize="12px" fontWeight="600">
                 Reputation
@@ -65,7 +79,8 @@ const UserSection: FC<UserSectionProps> = ({user}) => {
           </StyledViewDetails>
 
           <StyledViewIcon>
-            <StyledIconContainer onPress={() => isExpanded()}>
+            <StyledIconContainer
+              onPress={() => (!isBlocked ? isExpanded() : null)}>
               {isCollapsed && (
                 <UpArrow
                   size={46}
@@ -91,7 +106,7 @@ const UserSection: FC<UserSectionProps> = ({user}) => {
           <StyledButton
             onPress={() => follow()}
             color={'green'}
-            title="Follow"
+            title={showFollowing}
             fontSize="1px"
           />
           <StyledButton onPress={() => block()} color={'red'} title="Block" />

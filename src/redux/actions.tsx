@@ -1,12 +1,16 @@
-import {User} from '../types';
-import {FOLLOW_USER, BLOCK_USER} from './actionTypes';
+import {FOLLOW_USER, BLOCK_USER, UNFOLLOW_USER} from './actionTypes';
 
-export const followUser = (user: User) => ({
+export const followUser = (userId: number) => ({
   type: FOLLOW_USER,
-  payload: user,
+  payload: userId,
 });
 
-export const blockUser = (user: User) => ({
+export const blockUser = (userId: number) => ({
   type: BLOCK_USER,
-  payload: user,
+  payload: userId,
+});
+
+export const unfollowUser = (userId: number) => ({
+  type: UNFOLLOW_USER,
+  payload: userId,
 });
