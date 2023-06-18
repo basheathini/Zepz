@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import connectionsReducer from './connectionsReducer';
+import userReducer from './userReducer';
 
 const rootReducer = combineReducers({
-  following: connectionsReducer,
+  following: userReducer,//add more reducers
 });
 
 export default rootReducer;
