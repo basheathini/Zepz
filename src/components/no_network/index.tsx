@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyledText} from '../global_styledComponents';
+import {StyledText} from '../global';
 import {StyledContainer} from './styledComponents';
 
 const NetworkConnectionError = ({}) => {

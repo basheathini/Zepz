@@ -5,7 +5,7 @@ import {FlatList} from 'react-native';
 import React from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import NetworkConnectionError from '../../components/no_network';
-import UserSection from '../../components';
+import UserSection from '../../components/user_card';
 
 const DisplayUsers = ({}) => {
   const [isConnected, setConnectionState] = useState(false);

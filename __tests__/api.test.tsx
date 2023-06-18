@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, waitFor} from '@testing-library/react-native';
 import {act} from 'react-test-renderer';
-import UserSection from '../src/components';
+import UserSection from '../src/components/user_card';
 import {User} from '../src/types';
 
 describe('UserSection', () => {

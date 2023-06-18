@@ -1,10 +1,10 @@
 import React, {FC, useState} from 'react';
-import {User} from '../types';
-import DownArrow from '../assets/icons/DownArrow';
-import UpArrow from '../assets/icons/UpArrow';
-import {StyledButton, StyledText} from './global_styledComponents';
+import {User} from '../../types';
+import DownArrow from '../../assets/icons/DownArrow';
+import UpArrow from '../../assets/icons/UpArrow';
+import {StyledButton, StyledText} from '../global';
 import {useDispatch, useSelector} from 'react-redux';
-import {followUser, blockUser, unfollowUser} from '../redux/actions';
+import {followUser, blockUser, unfollowUser} from '../../redux/actions';
 import {
   StyledContainer,
   StyledExpandedContainer,
@@ -15,9 +15,9 @@ import {
   StyledViewContainer,
   StyledViewDetails,
   StyledViewIcon,
-} from './user_card/styledComponents';
+} from './styledComponents';
 
-export interface UserSectionProps {
+type UserSectionProps = {
   user: User;
 }
 
