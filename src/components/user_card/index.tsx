@@ -46,8 +46,13 @@ const UserSection: FC<UserSectionProps> = ({user}) => {
     setIsCollapsed(!isCollapsed);
   };
 
+  const viewFullProfile = () => {
+
+    console.log('viewFullProfile', user)
+  }
+
   return (
-    <StyledContainer disable={isBlocked}>
+    <StyledContainer onPress={() => viewFullProfile()} disable={isBlocked}>
       <StyledViewContainer>
         <StyledUserInfoContainer>
           <StyledUserImage

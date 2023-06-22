@@ -6,10 +6,12 @@ import React from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import NetworkConnectionError from '../../components/no_network';
 import UserSection from '../../components/user_card';
+import { RefreshControl } from 'react-native-gesture-handler';
 
-const DisplayUsers = ({}) => {
+const DisplayUsers = ( navigation : any) => {
   const [isConnected, setConnectionState] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [isRefreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -22,8 +24,10 @@ const DisplayUsers = ({}) => {
   }, []);
 
   const fetchUsers = async () => {
-    getUsers().then((data: RequestModel) => {
+    setRefreshing(true);
+    getUsers(20).then((data: RequestModel) => {
       setUsers(data.items);
+      setRefreshing(false);
     });
   };
 
@@ -31,12 +35,18 @@ const DisplayUsers = ({}) => {
     <>
       {isConnected ? (
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={() => fetchUsers} />
+          }
           data={users}
           horizontal={false}
           renderItem={({item}) => {
             const user: User = item as User;
             return <UserSection user={user} />;
           }}
+          keyExtractor={(item, index) => index.toString()}
+          onEndReached={() => console.log("Load more data...")}
+          onEndReachedThreshold={0}
         />
       ) : (
         <NetworkConnectionError />

@@ -12,7 +12,8 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Top 20 users" component={DisplayUsers} />
+          <Stack.Screen name='UsersScreen' component={DisplayUsers} key={'UsersScreen'} options={{'title' : 'Top 20 Users'}}/>
+          <Stack.Screen name='DetailedScreen' component={DisplayUsers} key={'DetailedScreen'}  options={{'title' : 'Detailed User'}} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
